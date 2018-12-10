@@ -1,0 +1,220 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>用户登录</title>
+    <style>
+      /* NOTE: The styles were added inline because Prefixfree needs access to your styles and they must be inlined if they are on local disk! */
+
+ 
+body{
+	margin: 0;
+	padding: 0;
+	background: #fff;
+
+	color: #fff;
+	font-family: Arial;
+	font-size: 12px;
+}
+
+        .body {
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -40px;
+            bottom: -40px;
+            width: auto;
+            height: auto;
+            background-image: url('../../LocalStyle/压裂井场三维图.jpg');
+            background-size: cover;
+            -webkit-filter: blur(1px);
+            z-index: 0;
+        }
+
+.grad{
+	position: absolute;
+	top: -20px;
+	left: -20px;
+	right: -40px;
+	bottom: -40px;
+	width: auto;
+	height: auto;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.65))); /* Chrome,Safari4+ */
+	z-index: 1;
+	opacity: 0.7;
+}
+
+.header{
+	position: absolute;
+	top: calc(50% - 75px);
+	left: calc(50% - 350px);
+	z-index: 2;
+}
+
+.header div{
+	float: left;
+	color: #fff;
+	font-family: 'Exo', sans-serif;
+	font-size: 35px;
+	font-weight: 200;
+}
+
+.header div span{
+	color: rgba(255,255,255,0.6) !important;
+}
+
+.login{
+	position: absolute;
+	top: calc(50% - 75px);
+	left: calc(50% - 50px);
+	height: 150px;
+	width: 350px;
+	padding: 10px;
+	z-index: 2;
+}
+
+.login input[type=text]{
+	width: 250px;
+	height: 30px;
+	background: transparent;
+	border: 1px solid rgba(255,255,255,0.6);
+	border-radius: 2px;
+	color: #fff;
+	font-family: 'Exo', sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 4px;
+}
+
+.login input[type=password]{
+	width: 250px;
+	height: 30px;
+	background: transparent;
+	border: 1px solid rgba(255,255,255,0.6);
+	border-radius: 2px;
+	color: #fff;
+	font-family: 'Exo', sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 4px;
+	margin-top: 10px;
+}
+
+.login input[type=button]{
+	width: 260px;
+	height: 35px;
+	background: #fff;
+	border: 1px solid #fff;
+	cursor: pointer;
+	border-radius: 2px;
+	color: #a18d6c;
+	font-family: 'Exo', sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 6px;
+	margin-top: 10px;
+}
+
+.login input[type=button]:hover{
+	opacity: 0.8;
+}
+
+.login input[type=button]:active{
+	opacity: 0.6;
+}
+
+.login input[type=text]:focus{
+	outline: none;
+	border: 1px solid rgba(255,255,255,0.9);
+}
+
+.login input[type=password]:focus{
+	outline: none;
+	border: 1px solid rgba(255,255,255,0.9);
+}
+
+.login input[type=button]:focus{
+	outline: none;
+}
+
+::-webkit-input-placeholder{
+   color: rgba(255,255,255,0.6);
+}
+
+::-moz-input-placeholder{
+   color: rgba(255,255,255,0.6);
+}
+    </style>
+    <script type="text/javascript">
+        //调用js登陆方法验证用户名，和密码 如果通过，条页面！
+        function login() {
+            //获取用户名和密码
+            var userid = $("#user").val();
+            var password = $("#password").val();
+            //验证用户名不为空
+            if (userid == "" || null) {
+              //  $.messager.alert("提示", "请输入用户名", "info");
+                alert("请输入用户名！");
+                return;
+            }
+                //验证密码不为空
+            else if (password == "" || null) {
+                // $.messager.alert("提示", "请输密码", "info");
+                alert("请输入密码！");
+                return;
+            } else {
+                //验证通过，调用LoginController中的confirmation（）方法，去B层验证密码是否正确 
+                $.ajax({
+                    url: "../Login/confirmation",
+                    data: { userid: userid, password: password },   //传入的数据
+                    type: "POST",                                      //返回的类型                           
+                    dataType: 'text',
+                    success: function (data) {                         //接收返回的数据 判断 成功则跳页面，失败则返回
+                        if (data == "OK") {
+                            //$.messager.alert("提示", "登陆成功，请您重新输入！", "info");
+                            //        //location.reload(true);
+                            window.location.href = "http://www.baidu.com";//你可以跟换里面的网址，以便成功后跳转
+                          
+                            //$("#myTable").hide("slow"); 
+                            //$("#success").show("slow"); 
+                        } else if (data == "error") {
+                            // $.messager.alert("提示", "用户名或密码不正确，请您重新输入！", "info");
+                            alert("用户名或密码不正确，请您重新输入！");
+                            //$("#error").show("slow"); 
+                            //$("#load").hide("slow"); 
+                        } else {
+                            alert("输入异常，请重新输入！");
+                        }
+                    },
+                    error: function () { alert("输入异常，请重新输入！") }, //错误提示
+
+                });
+
+            }
+        }
+
+
+    </script>
+</head>
+<body>
+    <div class="body"></div>
+    <div class="grad"></div>
+    <div class="header">
+        <div>iFracView<br/><span>压裂远程监控系统</span></div>
+    </div>
+    <br>
+    <div class="login">
+        <input type="text" placeholder="用户名" id="user"><br>
+        <input type="password" placeholder="密码" id="password"><br>
+        <input type="button" value="登录" onclick="login()">
+    </div>
+
+    <script src="~/scripts/jquery-1.10.2.js"></script>
+</body>
+</html>
