@@ -35,11 +35,8 @@
                 border-color: #666666;
                 background-color: rgba(102,102,102,0.2);
             }
-
     </style>
-    for(i<point.x){
-                    
-                    }
+
     <script>
         {
             function selectRow() {
@@ -47,17 +44,20 @@
                     var tb = event.srcElement.parentElement.parentElement;
                     var trs = tb.getElementsByTagName("tr");
                     for (var i = 0; i < trs.length; i++) {
-                        if (trs[i] == this) { trs[i].style.background = "#dedede"; }
-                        else { trs[i].style.background = ""; }
+
+                        trs[i].style.background = "";
                     }
 
                     curRow = event.srcElement.parentElement;
-                    curRow.style.background ="#dedede" ;
-                    curRow.style.color = "white";
+                    curRow.style.background = "#dedede";
+                    myChart.dispatchAction({
+                        type: 'highlight',
+                        seriesIndex: 0,
+                        dataIndex: Number( curRow.cells[0].innerText)
+                    })
                 }
             }
         }
-
     </script>
 </head>
 <body style="height: 100%; margin: 0">
@@ -71,12 +71,12 @@
                 <th>压裂队编号</th>
             </tr>
             <tr>
-                <td>Text 1A</td>
+                <td>1</td>
                 <td>Text 1B</td>
                 <td>Text 1C</td>
             </tr>
             <tr>
-                <td>Text 2A</td>
+                <td>2</td>
                 <td>Text 2B</td>
                 <td>Text 2C</td>
             </tr>
